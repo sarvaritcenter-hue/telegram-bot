@@ -30,7 +30,7 @@ async def cmd_start(msg: Message, state: FSMContext):
     await msg.answer(
         f"👋 Assalomu alaykum, <b>{name}</b>!\n\n"
         f"🏠 <b>Uy-Joy Bozori</b>ga xush kelibsiz!\n\n"
-        f"Uy, joy va yerlarni:\n"
+        f"Uy, joy, yer va mashinalarni:\n"
         f"• 💰 Sotish / 🔑 Ijaraga berish\n"
         f"• 🔍 Qidirish / Ko'rish\n\n"
         f"Quyidagi rejimdan birini tanlang 👇",
