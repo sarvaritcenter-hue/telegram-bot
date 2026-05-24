@@ -13,19 +13,19 @@ REMOVE = ReplyKeyboardRemove()
 def main_menu_xaridor() -> ReplyKeyboardMarkup:
     return ReplyKeyboardMarkup(keyboard=[
         [KeyboardButton(text="🔍 E'lon qidirish")],
-        [KeyboardButton(text="🏠 Uylar"), KeyboardButton(text="🏢 Joylar"), KeyboardButton(text="🌿 Yerlar")],
-        [KeyboardButton(text="🚗 Mashinalar")],
+        [KeyboardButton(text="🏠 Uylar"), KeyboardButton(text="🏢 Joylar"), KeyboardButton(text="🌿 Yerlar"), KeyboardButton(text="🚗 Mashinalar")],
         [KeyboardButton(text="📌 Mening so'rovlarim"), KeyboardButton(text="⚙️ Sozlamalar")],
         [KeyboardButton(text="📦 Arxiv"), KeyboardButton(text="🔄 Rejimni almashtirish")],
-        [KeyboardButton(text="🔄 Rejimni almashtirish")],
+        [KeyboardButton(text="📞 Admin bilan bog'lanish")],
     ], resize_keyboard=True)
 
 def main_menu_sotuvchi() -> ReplyKeyboardMarkup:
     return ReplyKeyboardMarkup(keyboard=[
         [KeyboardButton(text="➕ E'lon berish")],
         [KeyboardButton(text="📋 Mening e'lonlarim"), KeyboardButton(text="🔍 E'lon qidirish")],
-        [KeyboardButton(text="🚗 Mashinalar")],
+        [KeyboardButton(text="🏠 Uylar"), KeyboardButton(text="🏢 Joylar"), KeyboardButton(text="🌿 Yerlar"), KeyboardButton(text="🚗 Mashinalar")],
         [KeyboardButton(text="⚙️ Sozlamalar"), KeyboardButton(text="🔄 Rejimni almashtirish")],
+        [KeyboardButton(text="🔁 Boshlash"), KeyboardButton(text="📞 Admin bilan bog'lanish")],
     ], resize_keyboard=True)
 
 def rejim_tanlash() -> ReplyKeyboardMarkup:
