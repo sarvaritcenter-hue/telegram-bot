@@ -241,15 +241,44 @@ async def elon_foto_tayyor(msg: Message, state: FSMContext):
     await msg.answer(preview_text, reply_markup=tasdiqlash_kb())
 
 @router.message(StateFilter(ElonBerish.tasdiq), F.text == "✅ Tasdiqlash va e'lon berish")
-async def elon_tasdiq(msg: Message, state: FSMContext):
+async def elon_tasdiq(msg: Message, state: FSMContext, bot: Bot):
     data = await state.get_data()
     await state.clear()
     elon_data = {**data, "user_id": msg.from_user.id,
                  "username": msg.from_user.username or "",
                  "full_name": msg.from_user.full_name or ""}
     elon_id = await add_elon(elon_data)
-    await msg.answer(f"✅ <b>E'lon joylashtirildi!</b>\n🆔 E'lon #{elon_id}",
-                     reply_markup=main_menu_sotuvchi())
+
+    # Foydalanuvchiga xabar
+    await msg.answer(
+        f"✅ <b>E'loningiz qabul qilindi!</b>\n"
+        f"🆔 E'lon #{elon_id}\n\n"
+        f"⏳ Admin ko'rib chiqgach, e'loningiz e'lon taxtasida ko'rinadi.",
+        reply_markup=main_menu_sotuvchi()
+    )
+
+    # Adminga yuborish
+    from utils import elon_matn, send_elon
+    elon = await __import__('database').get_elon(elon_id)
+    if elon:
+        moderation_kb = InlineKeyboardMarkup(inline_keyboard=[
+            [
+                InlineKeyboardButton(text="✅ Ma'qul", callback_data=f"approve_{elon_id}"),
+                InlineKeyboardButton(text="❌ Rad etish", callback_data=f"reject_{elon_id}"),
+            ]
+        ])
+        for admin_id in ADMIN_IDS:
+            try:
+                await bot.send_message(
+                    admin_id,
+                    f"🔔 <b>Yangi e'lon #{elon_id} — tekshirish kutilmoqda</b>\n\n"
+                    f"👤 Foydalanuvchi: {msg.from_user.full_name} "
+                    f"(@{msg.from_user.username or 'username yoq'})\n"
+                    f"🆔 ID: <code>{msg.from_user.id}</code>"
+                )
+                await send_elon(bot, admin_id, elon, reply_markup=moderation_kb, show_location=True)
+            except:
+                pass
 
 @router.message(StateFilter(ElonBerish.tasdiq), F.text == "✏️ Qaytadan to'ldirish")
 async def elon_qaytadan(msg: Message, state: FSMContext):
