@@ -72,8 +72,26 @@ async def rejim_almashtirish(msg: Message, state: FSMContext):
         reply_markup=rejim_tanlash()
     )
 
-# ========== ORQAGA ==========
-@router.message(F.text == "🔙 Orqaga")
+# ========== ADMIN BILAN BOG'LANISH ==========
+@router.message(F.text == "📞 Admin bilan bog'lanish")
+async def admin_boglanish(msg: Message):
+    await msg.answer(
+        "📞 <b>Admin bilan bog'lanish</b>\n\n"
+        "Savol, taklif yoki muammo bo'lsa:\n\n"
+        "👤 Admin: @master_sarvar\n\n"
+        "<i>Ish vaqti: 09:00 — 22:00</i>"
+    )
+
+
+@router.message(F.text == "🔁 Boshlash")
+async def qayta_boshlash(msg: Message, state: FSMContext):
+    await state.clear()
+    user = await get_user(msg.from_user.id)
+    rejim = user.get("rejim", "xaridor") if user else "xaridor"
+    if rejim == "sotuvchi":
+        await msg.answer("🏠 Asosiy menyu", reply_markup=main_menu_sotuvchi())
+    else:
+        await msg.answer("🏠 Asosiy menyu", reply_markup=main_menu_xaridor())
 async def orqaga(msg: Message, state: FSMContext):
     await state.clear()
     user = await get_user(msg.from_user.id)
